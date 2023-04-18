@@ -20,13 +20,23 @@ import com.kotoriSystems.entity.Tutorial;
 import com.kotoriSystems.model.TutorialForm;
 import com.kotoriSystems.repository.TutorialRepository;
 
-
+/**
+ * チュートリアル画面のコントローラー
+ */
 @Controller
 public class TutorialController {
 
   @Autowired
   private TutorialRepository tutorialRepository;
 
+  /**
+   * チュートリアルの一覧を返す
+   *
+   * @param tutorialForm
+   * @param page
+   * @param size
+   * @return
+   */
   @GetMapping("/tutorials")
   public String getAll(@ModelAttribute TutorialForm tutorialForm, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
     try {
@@ -49,6 +59,16 @@ public class TutorialController {
       tutorialForm.setTotalItems(pageTuts.getTotalElements());
       tutorialForm.setTotalPages(pageTuts.getTotalPages());
       tutorialForm.setPageSize(size);
+
+      // do some heavy random calculation processes
+      if (tutorials.size() == 2) {
+        for (int i = 0; i < 500000; i++) {
+          int a = (int) (Math.random() * 500000);
+          int b = (int) (Math.random() * 500000);
+          int c = a * b;
+        }
+      }
+
     } catch (Exception e) {
       tutorialForm.setMessage(e.getMessage());
     }
@@ -56,6 +76,15 @@ public class TutorialController {
     return "tutorials";
   }
 
+  /**
+   * チュートリアルの一覧を返す
+   * TODO:htmlのフォームから直接submitして上記getAllメソッドで一覧を返せば良いし、GETメソッドで良いのだが、JSを介したPOST動くか確認のために実装したメソッド
+   *
+   * @param tutorialForm
+   * @param page
+   * @param size
+   * @return
+   */
   @PostMapping("/tutorials")
   public String getTutorials(@ModelAttribute TutorialForm tutorialForm,
       @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "3") int size) {
@@ -95,12 +124,23 @@ public class TutorialController {
       return "tutorials";
   }
 
-  // Getmapping for home page
+  /**
+   * ホーム画面を返す
+   * TODO:コントローラーを分けるべき
+   *
+   * @return
+   */
   @GetMapping("/")
   public String home() {
     return "home";
   }
 
+  /**
+   * チュートリアルの新規作成画面を返す
+   *
+   * @param model
+   * @return
+   */
   @GetMapping("/tutorials/new")
   public String addTutorial(Model model) {
     Tutorial tutorial = new Tutorial();
@@ -112,6 +152,13 @@ public class TutorialController {
     return "tutorial_form";
   }
 
+  /**
+   * チュートリアルの新規作成
+   *
+   * @param tutorial
+   * @param redirectAttributes
+   * @return
+   */
   @PostMapping("/tutorials/save")
   public String saveTutorial(Tutorial tutorial, RedirectAttributes redirectAttributes) {
     try {
@@ -125,6 +172,14 @@ public class TutorialController {
     return "redirect:/tutorials";
   }
 
+  /**
+   * チュートリアルの編集画面を返す
+   *
+   * @param id
+   * @param model
+   * @param redirectAttributes
+   * @return
+   */
   @GetMapping("/tutorials/{id}")
   public String editTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
     try {
@@ -141,6 +196,14 @@ public class TutorialController {
     }
   }
 
+  /**
+   * チュートリアルの削除
+   *
+   * @param id
+   * @param model
+   * @param redirectAttributes
+   * @return
+   */
   @GetMapping("/tutorials/delete/{id}")
   public String deleteTutorial(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
     try {
@@ -154,6 +217,15 @@ public class TutorialController {
     return "redirect:/tutorials";
   }
 
+  /**
+   * チュートリアルの公開状態を更新
+   *
+   * @param id
+   * @param published
+   * @param model
+   * @param redirectAttributes
+   * @return
+   */
   @GetMapping("/tutorials/{id}/published/{status}")
   public String updateTutorialPublishedStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean published,
       Model model, RedirectAttributes redirectAttributes) {
