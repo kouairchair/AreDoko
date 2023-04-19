@@ -6,7 +6,8 @@
 Spring BootにThymeleafのテンプレートエンジンを使用して開発されています。
 
 > **Warning**
-> まだ開発の初期段階です。README.mdの記載内容と実際の実装は異なります。
+> - まだ開発の初期段階です。README.mdの記載内容と実際の実装は異なります。
+> - VPS上のDBのパスワードが含まれるため、`src/main/resources/application.properties`はレポジトリ管理対象外としています。
 
 ## 機能
 
