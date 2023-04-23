@@ -125,17 +125,6 @@ public class TutorialController {
   }
 
   /**
-   * ホーム画面を返す
-   * TODO:コントローラーを分けるべき
-   *
-   * @return
-   */
-  @GetMapping("/")
-  public String home() {
-    return "home";
-  }
-
-  /**
    * チュートリアルの新規作成画面を返す
    *
    * @param model
