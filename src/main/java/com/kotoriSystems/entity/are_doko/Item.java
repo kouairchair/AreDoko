@@ -27,6 +27,9 @@ public class Item {
     @JoinColumn(name = "genre_id", nullable = false)
     private Genre genre;
 
+    public Item() {
+    }
+
     public Item(Long id, String name, Location location, String locationDetail, String userIds, Genre genre) {
       this.id = id;
       this.name = name;
